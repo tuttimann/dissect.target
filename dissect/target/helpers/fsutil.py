@@ -565,18 +565,18 @@ def open_decompress(
 
     if magic[:5] == b"\xfd7zXZ":
         if not HAS_XZ:
-            raise RuntimeError("lzma detected, but package was not installed: pip install lzma.")
+            raise RuntimeError("lzma detected, but missing optional lzma python module")
         return lzma.open(file, mode, encoding=encoding, errors=errors, newline=newline)
 
     if magic[:3] == b"BZh" and 0x31 <= magic[3] <= 0x39:
         # In a valid bz2 header the 4th byte is in the range b'1' ... b'9'.
         if not HAS_BZ2:
-            raise RuntimeError("bz2 detected, but package was not installed: pip install bz2")
+            raise RuntimeError("bz2 detected, but missing optional bz2 python module")
         return bz2.open(file, mode, encoding=encoding, errors=errors, newline=newline)
 
     if magic[:4] in [b"\xfd\x2f\xb5\x28", b"\x28\xb5\x2f\xfd"]:
         if not HAS_ZSTD:
-            raise RuntimeError("zstd detected, but package was not installed: pip install backports.zstd")
+            raise RuntimeError("zstd detected, but missing optional zstd python module")
         return zstd.open(file, mode=mode, encoding=encoding, errors=errors, newline=newline)
 
     if path:
